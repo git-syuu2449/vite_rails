@@ -1,0 +1,19 @@
+# 環境変数書き換え後 docker compose restart web or stop → upをする必要がある
+# docker compose exec web pkill -USR2 -f puma
+
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch('POSTGRES_USER') { 'root' } %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') { 'password' } %>
+  host: <%= ENV.fetch('POSTGRES_HOST') { 'db' } %>
+  port: <%= ENV.fetch('POSTGRES_PORT') { 5432 } %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch('POSTGRES_DB') { 'rails_db' } %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch('PG_TEST_DATABASE') { 'test_db' } %>
