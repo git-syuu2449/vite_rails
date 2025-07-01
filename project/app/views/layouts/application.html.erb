@@ -11,7 +11,16 @@
     <%# viteサーバー起動時にvite_client_tagの箇所にscriptタグが出力される %>
     <!-- ここにvite_client_tag  -->
     <%= vite_client_tag %>
+    
+    <%# 共通のCSS %>
+    <%= vite_stylesheet_tag 'css/application' %>
+    <%# ページ固有のCSS %>
+    <%= yield :stylesheet %> 
+
+    <%# 共通のJS %>
     <%= vite_javascript_tag 'js/application' %>
+    <%# ページ固有のJS %>
+    <%= yield :scripts %>
 
   </head>
 

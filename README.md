@@ -300,7 +300,7 @@ export default defineConfig({
 
 ```
 
-## tailwind
+### tailwind
 
 設定例  
 application.cssをapplication.jsからimportすることで利用される。  
@@ -335,6 +335,41 @@ export default {
 
 ```
 
+### html.erb
+
+画面から利用する方法も一応記載します。
+
+#### application.html.erb
+
+```erb
+
+    <%# viteサーバー起動時にvite_client_tagの箇所にscriptタグが出力される %>
+    <!-- ここにvite_client_tag  -->
+    <%= vite_client_tag %>
+    
+    <%# 共通のCSS %>
+    <%= vite_stylesheet_tag 'css/application' %>
+    <%# ページ固有のCSS %>
+    <%= yield :stylesheet %> 
+
+    <%# 共通のJS %>
+    <%= vite_javascript_tag 'js/application' %>
+    <%# ページ固有のJS %>
+    <%= yield :scripts %>
+
+```
+
+#### 個別のhtml.erb
+
+```erb
+
+<% content_for :scripts do %>
+  <!-- 個別のjsを出力 -->
+  <%= vite_javascript_tag 'js/samples/index' %>
+<% end %>
+
+
+```
 
 
 ### 動作確認
@@ -517,6 +552,10 @@ Vite Ruby can't find js/samples/index.js in the manifests.
 vite.config.tsのresolveのailiasにvueが抜けていると発生する。  
 設定を追加する。
 
+## 補足
+
+- manifest.jsonについて  
+  /project/public/vite-dev/.vite に生成される。
 
 
 以上。
