@@ -66,6 +66,7 @@ end
 
 # -------------------------------- 追加 --------------------------------
 
+gem 'dotenv-rails'         # 環境変数を.envで管理
 gem 'vite_rails'          # vite
 # gem 'tailwindcss-rails'   # tailwindcss viteを使うので不要
 

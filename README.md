@@ -81,6 +81,8 @@ docker compose exec nginx bash
 
 ## ブラウザアクセス先
 
+事前に必要なDBをpgAdmin上から作成しておく。
+
 - web
 http://localhost:3000/
 - PGAdimin
@@ -89,6 +91,8 @@ http://localhost:8081/browser/
 http://localhost:3036/vite-dev/
 
 ## .env設定例
+
+.env
 
 ```
 
@@ -124,6 +128,32 @@ VITE_RUBY_TEST_PORT=3307
 
 ```
 
+project/.env
+
+```
+# --- POSTGRES ---
+POSTGRES_USER=root
+POSTGRES_PASSWORD=password
+POSTGRES_DB=rails_db
+POSTGRES_HOST=db
+
+PG_TEST_DATABASE=test_db
+
+# --- PORT設定 ---
+APP_PORT=3000
+POSTGRES_PORT=5432
+NGINX_PORT=9300
+PGA_PORT=8081
+
+# --- Rails ---
+RAILS_MAX_THREADS=5
+RAILS_ENV=development
+VITE_RUBY_HOST=0.0.0.0
+VITE_RUBY_PORT=3306
+VITE_RUBY_TEST_PORT=3307
+
+```
+
 ## 導入
 
 ### gem
@@ -131,13 +161,67 @@ VITE_RUBY_TEST_PORT=3307
 - dotenv-rails
 - vite_rails
 
-### VSCode
 
-Ruby用に入れたもの
+## vite導入
 
-- Rails
-- Rails DB Schema
-- vscode-gemfile
+これらの導入は`setup.sh`にて行う。
+```bash
+appuser@0663c0951aeb:/app/project$ ./setup.sh 
+```
+
+1. gem追加  
+Gemfileに`vite_rails`を追加  
+```bash
+bundle install
+```
+
+2. vite初期化  
+```bash
+bundle exec vite install
+# 以下はどちらか使用する場合実行。今回のsetup.shではvueを導入
+bundle exec vite install vue # vue
+bundle exec vite install react # react
+```
+
+3. パッケージインストール  
+```bash
+npm install
+```
+
+## tailwind導入
+```bash
+# viteを使用するのでgemも不要
+```
+
+## vite関連の設定変更箇所
+
+viteの初期設定(bundle exec vite install後)に以下のファイルが作成される  
+1. config/vite.json
+2. vite.config.ts
+3. procfile.dev
+
+1と2+.envの設定が必要になる。  
+まずは初期状態で以下コマンドを実行してみる。
+```bash
+bin/vite dev
+
+# 以下のログが出力される
+
+appuser@0663c0951aeb:/app/project$ bin/vite dev
+
+  VITE v5.4.19  ready in 248 ms
+
+  ➜  Local:   http://localhost:3306/vite-dev/
+  ➜  Network: http://172.18.0.3:3306/vite-dev/
+
+
+
+```
+
+
+### config/vite.json
+
+
 
 
 

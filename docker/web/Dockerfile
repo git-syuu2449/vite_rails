@@ -46,13 +46,13 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
 # アプリ全体をコピー（初期rails new後用）
-COPY project/ ./
+COPY . .
 
 # ソケット用ディレクトリを作成（Pumaで使用する場合）
-RUN sudo mkdir -p /app/rails_app/tmp/sockets
+RUN sudo mkdir -p /app/project/tmp/sockets
 
 # 開発用の実行ユーザーに権限変更
-RUN sudo chown -R appuser:appgroup .
+RUN sudo chown -R appuser:appgroup /app/project
 RUN sudo chown -R appuser:appgroup /usr/local/bundle/
 
 
@@ -62,6 +62,7 @@ RUN sudo chown -R appuser:appgroup /usr/local/bundle/
 USER ${USERNAME}
 
 # rails new後に使用可能。初回(rails new前)はsleep infinityする
-CMD ["bash", "-c", "bin/rails s -p 3000 -b '0.0.0.0'"]
+# CMD ["bash", "-c", "bin/rails s -p 3000 -b '0.0.0.0'"]
 # CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD ["bash", "-c", "bundle install && bin/rails s -p 3000 -b '0.0.0.0'"]
+CMD ["bash", "-c", "bundle exec puma -C config/puma.rb"]
