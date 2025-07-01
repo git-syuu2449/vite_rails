@@ -53,6 +53,8 @@ RUN sudo mkdir -p /app/rails_app/tmp/sockets
 
 # 開発用の実行ユーザーに権限変更
 RUN sudo chown -R appuser:appgroup .
+RUN sudo chown -R appuser:appgroup /usr/local/bundle/
+
 
 # ------------------------------
 

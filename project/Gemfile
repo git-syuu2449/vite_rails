@@ -61,3 +61,18 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+
+
+# -------------------------------- 追加 --------------------------------
+
+gem 'vite_rails'          # vite
+# gem 'tailwindcss-rails'   # tailwindcss viteを使うので不要
+
+group :development, :test do
+  gem "pry-rails"         # デバッグ用（byebug代替）
+
+  # pry用
+  gem "pry-byebug", group: [:development, :test]  # ステップ実行できるように
+  gem "pry-nav", group: [:development, :test]     # next / step / finish の強化
+end
