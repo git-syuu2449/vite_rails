@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* 共通で使用するスタイルをまとめる */
+@layer components {
+  
+  /* 登録ボタン */
+  .u-form-primary-btn {
+    @apply bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition;
+  }
+
+  /* セクション内ラッパー */
+  .u-section-in-wrapper {
+    @apply bg-white p-6 sm:p-10 rounded-lg shadow-md max-w-7xl mx-auto mt-8;
+  }
+
+  /* タイトル */
+  .u-title-h2 {
+    @apply text-2xl font-semibold text-gray-800 mb-6;
+  }
+}

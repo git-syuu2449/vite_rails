@@ -1,9 +1,19 @@
 {
   "all": {
-    "sourceCodeDir": "app/javascript",
-    "watchAdditionalPaths": []
+    "sourceCodeDir": "app/frontend",
+    "watchAdditionalPaths": [
+      "app/frontend",
+      "vendor/assets"
+    ],
+    "entrypointsDir": "app/frontend",
+    "additionalEntrypoints": [
+      "~/js/**/*",
+      "~/css/**/*",
+      "~/images/**/*"
+    ]
   },
   "development": {
+    "host": "0.0.0.0",
     "autoBuild": true,
     "publicOutputDir": "vite-dev",
     "port": 3036
