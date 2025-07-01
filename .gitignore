@@ -1,69 +1,14 @@
-*.rbc
-capybara-*.html
-.rspec
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/db/*.sqlite3-[0-9]*
-/public/system
-/coverage/
-/spec/tmp
-*.orig
-rerun.txt
-pickle-email-*.html
+# プロジェクト直下はrails new直後のデフォルトに任せる
 
-# Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
-!/log/.keep
-!/tmp/.keep
+# === Docker関連 ===
 
-# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
-config/initializers/secret_token.rb
-config/master.key
+# Dockerに使用する.env
+.env*
 
-# Only include if you have production secrets in this file, which is no longer a Rails default
-# config/secrets.yml
+# .bk全般
+*.bk
 
-# dotenv, dotenv-rails
-# TODO Comment out these rules if environment variables can be committed
-.env
-.env*.local
+# Docker内の永続ボリューム（MySQL/PostgreSQLなど）
+docker/db/data/
 
-## Environment normalization:
-/.bundle
-/vendor/bundle
-
-# these should all be checked in to normalize the environment:
-# Gemfile.lock, .ruby-version, .ruby-gemset
-
-# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
-.rvmrc
-
-# if using bower-rails ignore default bower_components path bower.json files
-/vendor/assets/bower_components
-*.bowerrc
-bower.json
-
-# Ignore pow environment settings
-.powenv
-
-# Ignore Byebug command history file.
-.byebug_history
-
-# Ignore node_modules
-node_modules/
-
-# Ignore precompiled javascript packs
-/public/packs
-/public/packs-test
-/public/assets
-
-# Ignore yarn files
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
-
-# Ignore uploaded files in development
-/storage/*
-!/storage/.keep
-/public/uploads
+docker_rails.code-workspace
