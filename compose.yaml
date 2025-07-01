@@ -9,8 +9,9 @@ services:
         G_ID: ${G_ID}
         USERNAME: ${USERNAME}
         GROUPNAME: ${GROUPNAME}
-    command: sleep infinity # 待機状態にする（初回）
+    # command: sleep infinity # 待機状態にする（初回）
     user: "${U_ID}:${G_ID}" 
+    # user: root # rails new時はrootで実行
     ports:
       - "${APP_PORT}:3000"
       - ${VITE_RUBY_PORT}:3036 # vite dev
@@ -23,7 +24,7 @@ services:
       - .:/app
       - ~/.docker_bash_history:/appuser/.bash_history
     depends_on:
-      - rails_db
+      - db
 
 # ---------------------------------------------------------------
 
@@ -40,7 +41,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       # - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh:ro # healthチェックを行う場合
     depends_on:
-      - rails_web
+      - web
 
 # ---------------------------------------------------------------
 
@@ -67,7 +68,7 @@ services:
     ports:
       - "${PGA_PORT:-8081}:80"
     depends_on:
-      - rails_db
+      - db
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 # 永続化

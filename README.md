@@ -34,10 +34,29 @@ git clone git@github.com:git-syuu2449/vite_rails.git
 
 # 初回かつdocker compose up後（gitにrailsが含まれていない場合）
 # gitの多重構造になるのでnewした先の.gitはつくらない。
-rails new アプリ名 --skip-git 
+rails new アプリ名 --skip-git --database=postgresql
 
 # rails newをすると初期配置したGemfile,Gemfile.lockが上書きされ再生性される。
 # 再生生後、必要なgemを追記してbundle installを行う
+
+# ---------------
+
+# もしくはdocker runでrails newだけ先行する（初回のみ）
+# rails new . としているのはDockerfile内でWORKDIR /app/projectとすでにしている為。それがない場合は上書きされるため注意。
+docker compose run --rm --no-deps  web rails new . --force --database=postgresql --skip-git
+
+# 改めてビルド
+docker compose --env-file .env up -d --build
+
+# webが立ち上がらない場合があるのでログチェック
+docker ps
+docker ps -a
+docker compose logs web
+
+# ---------------
+
+# どちらも試した所感、sleep infinity で止めて exec bashして中で作業をした方が分かりやすい。
+# rails new時の--skip-gitの注意点：.gitignoreも作られない為、rails newしたディレクトリに配置が必要。
 
 ```
 

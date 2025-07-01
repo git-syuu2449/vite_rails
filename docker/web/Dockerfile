@@ -14,8 +14,7 @@ RUN apt-get update -qq && apt-get install -y \
   bash \
   git \
   curl \
-  sudo \
-  && rm -rf /var/lib/apt/lists/*
+  sudo
 
 # nodejsを別途インストール(apt-getは古い為)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
@@ -29,6 +28,8 @@ RUN groupadd -g ${U_ID} ${GROUPNAME} \
  && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
  # ------------------------------
+
+# USER root(rails new時)
 
 # 作業ディレクトリ(Docker関連がある場所) docker/web/Dockerfile
 # /app/作成するプロジェクト/appが階層となる
@@ -50,8 +51,8 @@ COPY project/ ./
 # ソケット用ディレクトリを作成（Pumaで使用する場合）
 RUN sudo mkdir -p /app/rails_app/tmp/sockets
 
-# アプリケーションファイル全体をコピー
-COPY project ./
+# 開発用の実行ユーザーに権限変更
+RUN sudo chown -R appuser:appgroup .
 
 # ------------------------------
 
@@ -59,5 +60,6 @@ COPY project ./
 USER ${USERNAME}
 
 # rails new後に使用可能。初回(rails new前)はsleep infinityする
+CMD ["bash", "-c", "bin/rails s -p 3000 -b '0.0.0.0'"]
+# CMD ["rails", "server", "-b", "0.0.0.0"]
 # CMD ["bash", "-c", "bundle install && bin/rails s -p 3000 -b '0.0.0.0'"]
-CMD ["rails", "server", "-b", "0.0.0.0"]
